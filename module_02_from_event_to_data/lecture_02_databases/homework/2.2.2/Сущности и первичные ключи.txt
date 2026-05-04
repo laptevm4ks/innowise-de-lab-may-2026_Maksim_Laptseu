@@ -1,0 +1,9 @@
+Сущность   - Первичный ключ
+products   - product_id
+employees  - employee_id
+customers  - customer_id
+shops      - shop_id
+categories - category_id
+cities     - city_id
+countries  - country_id
+sales      - sale_id

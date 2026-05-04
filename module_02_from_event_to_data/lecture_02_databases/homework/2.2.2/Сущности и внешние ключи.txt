@@ -1,0 +1,9 @@
+Сущность   - Внешние ключи
+products   - category_id
+employees  - city_id, shop_id
+customers  - city_id
+shops      - city_id
+categories - ...
+cities     - country_id
+countries  - ...
+sales      - product_id, cistomer_id, employee_id, shop_id
