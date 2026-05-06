@@ -1,0 +1,4 @@
+Если предположить, что составной ключ это - (sale_id, transaction_number),
+то поля sales_timestamp, customer_id и employee_id находились в частичной зависимости от transaction_number, что нарушало бы 2NF.
+
+Если за PK считать поле sale_id, которое является уникальным для каждой записи, то таблица sales будет соответствовать 2NF.
