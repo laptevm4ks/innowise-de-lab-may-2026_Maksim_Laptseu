@@ -1,0 +1,29 @@
+--task1
+UPDATE
+    products
+SET
+    price = price * 1.1
+JOIN
+    categories USING (category_id)
+WHERE
+    category_name = 'Fruits';
+
+--task2
+DELETE FROM
+    employees
+WHERE employee_id NOT IN (
+    SELECT DISTINCT employee_id 
+    FROM sales
+    WHERE employee_id IS NOT NULL
+);
+
+--task3
+BEGIN;
+
+INSERT INTO employees (employee_id, first_name, last_name, email)
+VALUES (500, 'Ivan', 'Ivanov', 'i.ivanov@company.com');
+
+INSERT INTO sales (sales_id, employee_id, total_price, sales_timestamp)
+VALUES (10001, 500, 150.00, CURRENT_TIMESTAMP::text);
+
+COMMIT;

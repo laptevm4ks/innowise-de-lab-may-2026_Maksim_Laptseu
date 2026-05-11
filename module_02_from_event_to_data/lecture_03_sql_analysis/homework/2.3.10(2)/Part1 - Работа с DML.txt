@@ -1,0 +1,34 @@
+-- task1
+INSERT INTO products (product_id, product_name, price, category_id, class, modify_timestamp, resistant, is_allergic, vitality_days)
+VALUES 
+(101, 'Mango Gold', 45.50, 1, 'A', CURRENT_TIMESTAMP::text, 'Yes', 'No', 10),
+(102, 'Organic Avocado', 52.00, 1, 'B', CURRENT_TIMESTAMP::text, 'Yes', 'Yes', 14);
+
+--task2
+SELECT
+    *
+FROM
+    products 
+WHERE
+    is_allergic = 'Yes' 
+    AND resistant = 'Yes';
+
+--task3
+UPDATE
+    products 
+SET
+    is_allergic = 'Yes' 
+WHERE
+    product_name = 'Bananas Family';
+
+--task4
+DELETE FROM
+    products 
+WHERE
+    product_id = 101;
+
+--task5
+SELECT
+    *
+FROM
+    Products;

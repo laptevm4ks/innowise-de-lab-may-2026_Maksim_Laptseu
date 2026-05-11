@@ -1,0 +1,7 @@
+--task1
+CREATE ROLE data_engineer_trainee WITH LOGIN PASSWORD 'pass';
+
+--task2
+GRANT CONNECT ON DATABASE postgre TO data_engineer_trainee;
+GRANT USAGE ON SCHEMA public TO data_engineer_trainee;
+GRANT SELECT ON TABLE Sales TO data_engineer_trainee;

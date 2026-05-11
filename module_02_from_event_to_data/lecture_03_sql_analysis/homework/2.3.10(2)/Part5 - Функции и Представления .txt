@@ -1,0 +1,32 @@
+--task1
+CREATE OR REPLACE FUNCTION AvgSalesPerEmployee(emp_id INT)
+RETURNS NUMERIC AS $$
+DECLARE
+    avg_revenue NUMERIC;
+BEGIN
+    SELECT AVG(total_price) INTO avg_revenue
+    FROM sales
+    WHERE employee_id = emp_id;
+
+    RETURN COALESCE(avg_revenue, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+--task2
+CREATE VIEW FullStatShops AS
+SELECT
+    s.store_id AS shop_id,
+    s.store_address AS shop_address,
+    ct.country,
+    COUNT(sl.sales_id) AS total_sales_count,
+    SUM(sl.total_price) AS total_sales_amount
+FROM 
+    stores s
+JOIN 
+    sales sl ON s.store_id = sl.store_id
+JOIN 
+    cities ci ON s.city_id = ci.city_id
+JOIN 
+    countries ct ON ci.country_id = ct.country_id
+GROUP BY 
+    1, 2, 3;
