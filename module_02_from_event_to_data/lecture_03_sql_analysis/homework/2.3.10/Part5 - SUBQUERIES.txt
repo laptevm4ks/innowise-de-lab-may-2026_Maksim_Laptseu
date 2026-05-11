@@ -1,0 +1,15 @@
+-- task1
+
+SELECT
+    e.first_name,
+    e.last_name,
+    sh.address,
+    s.total_price
+FROM
+    sales s
+JOIN
+    employees e USING (employee_id)
+JOIN
+    shops sh USING (shop_id)
+WHERE
+    s.total_price = (SELECT MAX(total_price) FROM sales);

@@ -1,0 +1,32 @@
+-- Task1
+
+SELECT
+    sh.shop_id,
+    sh.address,
+    ci.city_name,
+    ct.country_name
+FROM
+    shops sh
+JOIN
+    cities ci USING (city_id)
+JOIN countries ct USING (country_id)
+WHERE 
+    ct.country_code = 'PL';
+
+-- Task2
+
+SELECT
+    s.transaction_number,
+    p.product_name,
+    s.total_price,
+    s.customer_id,
+    s.sales_timestamp
+FROM
+    sales s
+JOIN
+    products p USING (product_id)
+WHERE
+    s.total_price > 1500
+    AND p.class = 'B'
+ORDER BY
+    s.transaction_number;

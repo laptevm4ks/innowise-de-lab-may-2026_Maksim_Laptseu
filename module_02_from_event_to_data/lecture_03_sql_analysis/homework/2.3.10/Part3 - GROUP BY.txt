@@ -1,0 +1,15 @@
+-- task1
+
+SELECT
+    ct.country_name,
+    COUNT(sh.shop_id) AS shops_count
+FROM
+    countries ct
+JOIN
+    cities ci USING (country_id)
+JOIN
+    shops sh USING (city_id)
+GROUP BY
+    ct.country_name
+ORDER BY
+    shops_count DESC;

@@ -1,0 +1,27 @@
+--task1
+
+WITH monthly_sales AS (
+    SELECT 
+        DATE_TRUNC('month', s.sales_timestamp::timestamp) AS sale_month,
+        SUM(s.total_price) AS monthly_revenue
+    FROM
+    	sales s
+    JOIN
+    	employees e USING (employee_id)
+    JOIN
+    	cities ci USING (city_id)
+    JOIN
+    	countries ct USING (country_id)
+    WHERE
+    	ct.country_code = 'DE'
+		AND sales_timestamp != ''
+    GROUP BY
+    	sale_month
+)
+SELECT 
+    sale_month,
+    monthly_revenue,
+    COALESCE(LAG(monthly_revenue) OVER (ORDER BY sale_month), 0) AS previous_month_revenue,
+    monthly_revenue - COALESCE(LAG(monthly_revenue) OVER (ORDER BY sale_month), 0) AS revenue_diff_vs_previous
+FROM monthly_sales
+ORDER BY sale_month ASC;

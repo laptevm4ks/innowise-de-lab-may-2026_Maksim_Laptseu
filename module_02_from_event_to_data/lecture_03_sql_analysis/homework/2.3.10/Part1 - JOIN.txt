@@ -1,0 +1,14 @@
+-- Task1
+
+SELECT
+    s.sales_id,
+    p.product_name,
+    sh.address
+FROM
+    sales s
+JOIN
+    products p USING (product_id)
+JOIN
+    employees e USING (employee_id)
+JOIN
+    shops sh USING (shop_id);
