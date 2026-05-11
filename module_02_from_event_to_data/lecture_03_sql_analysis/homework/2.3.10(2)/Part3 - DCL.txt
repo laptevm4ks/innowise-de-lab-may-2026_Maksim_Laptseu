@@ -5,3 +5,7 @@ CREATE ROLE data_engineer_trainee WITH LOGIN PASSWORD 'pass';
 GRANT CONNECT ON DATABASE postgre TO data_engineer_trainee;
 GRANT USAGE ON SCHEMA public TO data_engineer_trainee;
 GRANT SELECT ON TABLE Sales TO data_engineer_trainee;
+
+--task3
+GRANT INSERT, UPDATE ON TABLE Sales TO data_engineer_trainee;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO data_engineer_trainee;
