@@ -1,0 +1,76 @@
+DELETE FROM
+    silver.silver_employees
+WHERE
+    employee_id IS NULL;
+
+
+DELETE FROM
+    silver.silver_employees
+WHERE ctid NOT IN (
+    SELECT
+        MIN(ctid)
+    FROM
+	silver.silver_employees
+    GROUP BY
+	employee_id
+);
+
+
+DELETE FROM
+    silver.silver_employees e
+WHERE NOT EXISTS (
+    SELECT
+	1 
+    FROM
+	silver.silver_sales s 
+    WHERE
+	s.employee_id = e.employee_id
+);
+
+
+UPDATE
+    silver.silver_sales s
+SET 
+    shop_id = e.shop_id,
+    city_id = e.city_id
+FROM
+    silver.silver_employees e
+WHERE
+    s.employee_id = e.employee_id;
+
+ALTER TABLE silver.silver_countries ADD PRIMARY KEY (country_id);
+ALTER TABLE silver.silver_cities    ADD PRIMARY KEY (city_id);
+ALTER TABLE silver.silver_shops     ADD PRIMARY KEY (shop_id);
+ALTER TABLE silver.silver_categories ADD PRIMARY KEY (category_id);
+ALTER TABLE silver.silver_products   ADD PRIMARY KEY (product_id);
+ALTER TABLE silver.silver_customers  ADD PRIMARY KEY (customer_id);
+ALTER TABLE silver.silver_employees  ADD PRIMARY KEY (employee_id);
+ALTER TABLE silver.silver_sales      ADD PRIMARY KEY (sales_id);
+
+
+ALTER TABLE silver.silver_cities 
+    ADD CONSTRAINT fk_cities_countries FOREIGN KEY (country_id) REFERENCES silver.silver_countries(country_id);
+
+ALTER TABLE silver.silver_shops 
+    ADD CONSTRAINT fk_shops_cities FOREIGN KEY (city_id) REFERENCES silver.silver_cities(city_id);
+
+ALTER TABLE silver.silver_employees 
+    ADD CONSTRAINT fk_emp_shops FOREIGN KEY (shop_id) REFERENCES silver.silver_shops(shop_id);
+
+ALTER TABLE silver.silver_customers 
+    ADD CONSTRAINT fk_cust_cities FOREIGN KEY (city_id) REFERENCES silver.silver_cities(city_id);
+
+ALTER TABLE silver.silver_products 
+    ADD CONSTRAINT fk_prod_cat FOREIGN KEY (category_id) REFERENCES silver.silver_categories(category_id);
+
+ALTER TABLE silver.silver_sales 
+    ADD CONSTRAINT fk_sales_emp FOREIGN KEY (employee_id) REFERENCES silver.silver_employees(employee_id),
+    ADD CONSTRAINT fk_sales_cust FOREIGN KEY (customer_id) REFERENCES silver.silver_customers(customer_id),
+    ADD CONSTRAINT fk_sales_prod FOREIGN KEY (product_id) REFERENCES silver.silver_products(product_id),
+    ADD CONSTRAINT fk_sales_shop FOREIGN KEY (shop_id) REFERENCES silver.silver_shops(shop_id),
+    ADD CONSTRAINT fk_sales_city FOREIGN KEY (city_id) REFERENCES silver.silver_cities(city_id);
+
+ALTER TABLE
+    silver.silver_employees
+ADD CONSTRAINT check_hire_after_birth 
+CHECK (hire_date > birth_date);
